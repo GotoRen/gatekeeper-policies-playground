@@ -55,16 +55,18 @@ $ cat ./gatekeeper/yet-another-gatekeeper-policy/constraint/testdata/my-manifest
 1. ConstraintTemplate をインストール
 
 ```sh
-$ kubectl apply -f ./gatekeeper/privileged-container/template/template.yaml
+$ kubectl apply -f ./gatekeeper/yet-another-gatekeeper-policy/template/template.yaml
 ```
 
 2. Constraint をインストール
 
 ```sh
-$ kubectl apply -f ./gatekeeper/privileged-container/constraint/constraint.yaml
+$ kubectl apply -f ./gatekeeper/yet-another-gatekeeper-policy/constraint/constraint.yaml
 ```
 
 ## 検証
+
+- 例：`privileged-container`
 
 ```shell
 ### 検証の名前空間を作成
