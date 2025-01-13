@@ -5,7 +5,7 @@ metadata:
   namespace: no-restricted-namespace
 spec:
   containers:
-  - name: denied-container
-    image: nginx:latest
-    securityContext:
-      privileged: true
+    - name: denied-container
+      image: nginx:latest
+      securityContext:
+        privileged: true

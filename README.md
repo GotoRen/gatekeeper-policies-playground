@@ -1,6 +1,13 @@
 # gatekeeper-policies-playground
 
-## Run Locally
+## Gatekeeper インストール
+
+```shell
+$ cd ./gatekeeper-system/playground
+$ kustomize build . --enable-helm | kubectl apply -f -
+```
+
+## ポリシの作成
 
 1. Rego でポリシとテストを記述
 
@@ -41,4 +48,29 @@ $ make test/gatekeeper ## $ gator verify -v ./gatekeeper/...
 $ cat ./gatekeeper/yet-another-gatekeeper-policy/constraint/testdata/my-manifest.yaml | gator test \
     -f gatekeeper/yet-another-gatekeeper-policy/constraint/constraint.yaml \
     -f gatekeeper/yet-another-gatekeeper-policy/template/template.yaml
+```
+
+## ポリシの適用
+
+1. ConstraintTemplate をインストール
+
+```sh
+$ kubectl apply -f ./gatekeeper/privileged-container/template/template.yaml
+```
+
+2. Constraint をインストール
+
+```sh
+$ kubectl apply -f ./gatekeeper/privileged-container/constraint/constraint.yaml
+```
+
+## 検証
+
+```shell
+### 検証の名前空間を作成
+$ kubectl apply -f ./gatekeeper/privileged-container/constraint/testdata/restricted-namespace.yaml
+
+### 違反リソースをデプロイ
+$ kubectl apply -f ./gatekeeper/privileged-container/constraint/testdata/denied-pod.yaml
+Error from server (Forbidden): error when creating "./gatekeeper/privileged-container/constraint/testdata/denied-pod.yaml": admission webhook "validation.gatekeeper.sh" denied the request: [deny-privileged-container] privileged-container: apiVersion: v1, kind: Pod, name: denied-pod, container: denied-container; container runs as privileged
 ```

@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - namespace.yaml
+  - service.yaml
+labels:
+  - pairs:
+      app.kubernetes.io/owner: cloud-platform
+      app.kubernetes.io/group: gatekeeper
+      app.kubernetes.io/name: gatekeeper
+    includeTemplates: true
