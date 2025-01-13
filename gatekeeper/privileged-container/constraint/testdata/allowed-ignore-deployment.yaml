@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: allowed-ignore-deployment
+  namespace: restricted-namespace
+  labels:
+    deny-privileged-container.gatekeeper.gatekeeper-policies-playground.dev/ignore: "true"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: denied-pod
+  template:
+    metadata:
+      name: denied-pod
+      labels:
+        app: denied-pod
+    spec:
+      containers:
+        - name: denied-container
+          image: nginx:latest
+          securityContext:
+            privileged: true

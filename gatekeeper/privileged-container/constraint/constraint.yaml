@@ -1,0 +1,31 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: PrivilegedContainer
+metadata:
+  name: deny-privileged-container
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+    gatekeeper.gatekeeper-policies-playground.dev/severity: deny
+    gatekeeper.gatekeeper-policies-playground.dev/severity-level: "8"
+spec:
+  enforcementAction: deny
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod"]
+      - apiGroups: ["apps"]
+        kinds: ["Deployment", "ReplicaSet", "StatefulSet", "DaemonSet"]
+      - apiGroups: ["batch"]
+        kinds: ["Job", "CronJob"]
+    labelSelector:
+      matchExpressions:
+        - key: deny-privileged-container.gatekeeper.gatekeeper-policies-playground.dev/ignore
+          operator: NotIn
+          values: ["true"]
+    # namespaceSelector: # 名前空間を制約に含める場合
+    #   matchExpressions:
+    #     - key: deny-privileged-container.gatekeeper.gatekeeper-policies-playground.dev/enable
+    #       operator: In
+    #       values: ["true"]
+  parameters:
+    ignoreContainersAnnotationKey: deny-privileged-container.gatekeeper.gatekeeper-policies-playground.dev/ignore-containers
+    ignoreContainersName: []

@@ -4,7 +4,7 @@ import data.lib.core
 import data.lib.pods
 import future.keywords.in
 
-default default_ignore_annotation_key = "gatekeeper.cyberagent.co.jp/ignore-containers"
+default default_ignore_annotation_key = "gatekeeper.gatekeeper-policies-playground.dev/ignore-containers"
 
 is_ignore_container(container, parameters) {
     ignore_containers := { trim(ic, " ") |

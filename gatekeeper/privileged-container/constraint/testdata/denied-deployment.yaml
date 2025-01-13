@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: denied-deployment
+  namespace: restricted-namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: denied-pod
+  template:
+    metadata:
+      name: denied-pod
+      labels:
+        app: denied-pod
+    spec:
+      containers:
+        - name: denied-container-1
+          image: nginx:latest
+          securityContext:
+            privileged: true

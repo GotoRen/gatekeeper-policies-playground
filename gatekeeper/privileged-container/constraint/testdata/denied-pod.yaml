@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: denied-pod
+  namespace: restricted-namespace
+spec:
+  containers:
+    - name: denied-container
+      image: nginx:latest
+      securityContext:
+        privileged: true

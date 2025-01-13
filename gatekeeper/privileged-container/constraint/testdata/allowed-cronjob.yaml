@@ -1,0 +1,18 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: allowed-cronjob
+  namespace: restricted-namespace
+spec:
+  schedule: "* * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: allowed-container
+              image: nginx:latest
+              command:
+                - /bin/foo
+              securityContext:
+                privileged: false

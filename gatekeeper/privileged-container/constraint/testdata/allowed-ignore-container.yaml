@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: allowed-ignore-pod
+  namespace: restricted-namespace
+  annotations:
+    gatekeeper.gatekeeper-policies-playground.dev/ignore-containers: "ignore-container-1"
+    deny-privileged-container.gatekeeper.gatekeeper-policies-playground.dev/ignore-containers: "ignore-container-2"
+spec:
+  containers:
+    - name: ignore-container-1
+      image: nginx:latest
+      securityContext:
+        privileged: true
+    - name: ignore-container-2
+      image: nginx:latest
+      securityContext:
+        privileged: true

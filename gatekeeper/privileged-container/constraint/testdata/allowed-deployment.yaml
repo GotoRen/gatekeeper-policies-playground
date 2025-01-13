@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: allowed-deployment
+  namespace: restricted-namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: allowed-pod
+  template:
+    metadata:
+      name: allowed-pod
+      labels:
+        app: allowed-pod
+    spec:
+      containers:
+        - name: allowed-container-1
+          image: nginx:latest
+          securityContext:
+            privileged: false

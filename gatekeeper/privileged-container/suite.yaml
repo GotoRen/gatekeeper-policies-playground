@@ -1,0 +1,73 @@
+kind: Suite
+apiVersion: test.gatekeeper.sh/v1alpha1
+tests:
+  - name: deny-privileged-container
+    template: template/template.yaml
+    constraint: constraint/constraint.yaml
+    cases:
+      - name: allowed-pod
+        object: constraint/testdata/allowed-pod.yaml
+        # inventory:
+        # - constraint/testdata/restricted-namespace.yaml
+        assertions:
+          - violations: 0
+      - name: allowed-ignore-pod
+        object: constraint/testdata/allowed-ignore-pod.yaml
+        # inventory:
+        # - constraint/testdata/restricted-namespace.yaml
+        assertions:
+          - violations: 0
+      - name: denied-pod
+        object: constraint/testdata/denied-pod.yaml
+        # inventory:
+        # - constraint/testdata/restricted-namespace.yaml
+        assertions:
+          - violations: 1
+      - name: allowed-deployment
+        object: constraint/testdata/allowed-deployment.yaml
+        # inventory:
+        # - constraint/testdata/restricted-namespace.yaml
+        assertions:
+          - violations: 0
+      - name: allowed-ignore-deployment
+        object: constraint/testdata/allowed-ignore-deployment.yaml
+        # inventory:
+        # - constraint/testdata/restricted-namespace.yaml
+        assertions:
+          - violations: 0
+      - name: denied-deployment
+        object: constraint/testdata/denied-deployment.yaml
+        # inventory:
+        # - constraint/testdata/restricted-namespace.yaml
+        assertions:
+          - violations: 1
+      - name: allowed-cronjob
+        object: constraint/testdata/allowed-cronjob.yaml
+        # inventory:
+        # - constraint/testdata/restricted-namespace.yaml
+        assertions:
+          - violations: 0
+      - name: allowed-ignore-cronjob
+        object: constraint/testdata/allowed-ignore-cronjob.yaml
+        # inventory:
+        # - constraint/testdata/restricted-namespace.yaml
+        assertions:
+          - violations: 0
+      - name: denied-cronjob
+        object: constraint/testdata/denied-cronjob.yaml
+        # inventory:
+        # - constraint/testdata/restricted-namespace.yaml
+        assertions:
+          - violations: 1
+      # - name: no-restricted-pod
+      #   object: constraint/testdata/no-restricted-pod.yaml
+      #   inventory:
+      #     - constraint/testdata/no-restricted-namespace.yaml
+      #   assertions:
+      #     - violations: 0
+      - name: allowed-ignore-container
+        object: constraint/testdata/allowed-ignore-container.yaml
+        # inventory:
+        # - constraint/testdata/restricted-namespace.yaml
+        assertions:
+          - violations: 0

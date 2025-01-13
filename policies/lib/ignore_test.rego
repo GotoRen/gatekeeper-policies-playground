@@ -93,7 +93,7 @@ test_ignore_deployment {
 }
 
 test_ignore_parameter {
-    ignore_annotation_key := "test.gatekeeper.cyberagent.co.jp/ignore-containers"
+    ignore_annotation_key := "test.gatekeeper.gatekeeper-policies-playground.dev/ignore-containers"
 
     containers := [{
         "name": "foo"
